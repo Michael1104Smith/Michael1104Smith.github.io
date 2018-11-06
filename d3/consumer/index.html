@@ -1,0 +1,68 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/consumer.js"></script>
+	<script src="js/year.js"></script>
+	<script src="js/day_month.js"></script>
+	<script src="js/setting.js"></script>
+	<script src="js/chart.js"></script>
+    <script type="text/javascript">
+
+		var priceVersion_revenue_data = [];
+    	var priceVersion_avgRating_data = [];
+    	var priceVersion_score_data = [];
+    	var revenue_data = [];
+    	var avgRating_data = [];
+    	var score_data = [];
+    	var scoreUp_data = [];
+    	var scoreDown_data = [];
+    	var scoreUpWhite_data = [];
+    	var scoreDownWhite_data = [];
+    	var scoreDownGreen_data = [];
+    	var day_x = [];
+    	var year_x = [];
+    	var ticks = 1;
+    	var VerticalLineHeight = 50;
+
+
+    	$(document).ready(function(){
+			getJson("data/year.json");
+
+	        $('#dateRange').on("change",function(){
+	            var dateRange = $(this).val();
+	            $('.each_chart').each(function(){
+	            	$(this).html("");
+	            })
+	            $('#added_div').html("");
+				getJson("data/"+dateRange+".json");
+	        });
+    	})
+
+    </script>
+</head>
+<body>
+	<div id="charts">
+		<div class="each_side">
+		    <div id="select_date">
+			    <input id="dateIncrement" value="2" size="1">
+			    <select id="dateRange">
+			        <option value="day">Day Before</option>
+			        <option value="month">Month Before</option>
+			        <option value="year">Year Before</option>
+			    </select>
+			    <input id="dateToday" value="02/15/2016" style="width: 80px">
+		    </div>
+		</div>
+		<div class="each_side">
+			<div id="RevenuePriceChart" class="each_chart"></div>
+			<div id="AverageRatingChart" class="each_chart"></div>
+			<div id="ScoreScoreChart" class="each_chart"></div>
+		</div>
+	</div>
+	<div id="added_div">
+	</div>
+	<a>blairalden000@gmail.com</a>
+</body>
+</html>

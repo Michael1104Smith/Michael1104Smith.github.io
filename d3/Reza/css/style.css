@@ -1,0 +1,251 @@
+/* Webfont: Lato-Thin */@font-face {
+    font-family: 'LatoWebThin';
+    src: url('fonts/Lato-Thin.eot'); /* IE9 Compat Modes */
+    src: url('fonts/Lato-Thin.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('fonts/Lato-Thin.woff2') format('woff2'), /* Modern Browsers */
+         url('fonts/Lato-Thin.woff') format('woff'), /* Modern Browsers */
+         url('fonts/Lato-Thin.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+/* Webfont: Lato-Light */@font-face {
+    font-family: 'LatoWebLight';
+    src: url('fonts/Lato-Light.eot'); /* IE9 Compat Modes */
+    src: url('fonts/Lato-Light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('fonts/Lato-Light.woff2') format('woff2'), /* Modern Browsers */
+         url('fonts/Lato-Light.woff') format('woff'), /* Modern Browsers */
+         url('fonts/Lato-Light.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: Lato-Regular */@font-face {
+    font-family: 'LatoWeb';
+    src: url('fonts/Lato-Regular.eot'); /* IE9 Compat Modes */
+    src: url('fonts/Lato-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('fonts/Lato-Regular.woff2') format('woff2'), /* Modern Browsers */
+         url('fonts/Lato-Regular.woff') format('woff'), /* Modern Browsers */
+         url('fonts/Lato-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+body{
+	font-family: LatoWebThin;
+	background-color: #242734;
+}
+.each_div{
+	width: 240px;
+	height: 330px;
+	background-color: #1c1e28;
+	float:left;
+	margin-left: 14px;
+}
+.gauge_div{
+	margin-left: 26px;
+	margin-top: 26px;
+	float:left;
+}
+.control_div,
+.chart_div{
+	width: 100%;
+}
+.chart_div{
+	height: 240px;
+}
+.control_div{
+	height: 90px;
+}
+.control_div .each_control_div{
+	height: 100%;
+	text-align: center;
+	float:left;
+}
+.control_div .each_control_div3{
+	width: 33.33%;
+	cursor: pointer;
+}
+.control_div .each_control_div1{
+	width: 100%;
+}
+.control_div .inner_control{
+	width: 100%;
+	height: 50%;
+	float: left;
+}
+.control_div .txt{
+	font-family: LatoWebLight;
+	font-size: 14px;
+	color: #fff;
+	display: inline-block;
+	margin-top: 10px;
+}
+.control_div .image{
+	height: 25px;    
+	display: inline-block;
+	margin-top:20px;
+	background-size: cover;
+}
+.control_div .Electricity.image{
+	width: 14px;
+}
+.control_div .Water.image{
+	width: 21px;
+}
+.control_div .Heat.image{
+	width: 12px;
+}
+.control_div .Co2.image{
+	width: 29px;
+}
+.control_div .Humidity.image{
+	width: 25px;
+}
+
+.control_div .each_control_div.inactive{
+	background-color: #181a22;	
+}
+
+.control_div .each_control_div.inactive .Electricity.image{
+	background-image: url('../img/electricity-inactive.png');
+}
+.control_div .each_control_div.inactive .Water.image{
+	background-image: url('../img/water-inactive.png');
+}
+.control_div .each_control_div.inactive .Heat.image{
+	background-image: url('../img/heat-inactive.png');
+}
+.control_div .each_control_div.inactive .Co2.image{
+	background-image: url('../img/warning-red.png');
+}
+.control_div .each_control_div.inactive .Humidity.image{
+	background-image: url('../img/ok-green.png');
+}
+.control_div .each_control_div.active .Electricity.image{
+	background-image: url('../img/electricity-active.png');
+}
+.control_div .each_control_div.active .Water.image{
+	background-image: url('../img/water-active.png');
+}
+.control_div .each_control_div.active .Heat.image{
+	background-image: url('../img/heat-active.png');
+}
+.control_div .each_control_div3.active{
+	background-color: #21242f;	
+}
+
+.stop-left {
+    stop-color: #242731;  /* Indigo */
+}
+
+.stop-right {
+    stop-color: #c9ca72;  /* Teal */
+}
+
+.stop-left1 {
+    stop-color: #222532;  /* Indigo */
+}
+.stop-right1 {
+    stop-color: #c9ca72;  /* Teal */
+}
+
+.stop-left2 {
+    stop-color: #222532;  /* Indigo */
+}
+
+.stop-right2 {
+    stop-color: #313546;  /* Teal */
+}
+
+.stop-left3 {
+    stop-color: #76feb3;  /* Indigo */
+}
+
+.stop-right3 {
+    stop-color: #282f43;  /* Teal */
+}
+
+.stop-left4 {
+    stop-color: #e9524f;  /* Indigo */
+}
+
+.stop-right4 {
+    stop-color: #282f43;  /* Teal */
+}
+
+.stop-left5 {
+    stop-color: #7fffb8;  /* Indigo */
+}
+
+.stop-right5 {
+    stop-color: #fbfaf9;  /* Teal */
+}
+
+.stop-left6 {
+    stop-color: #fe7b79;  /* Indigo */
+}
+
+.stop-right6 {
+    stop-color: #fbfaf9;  /* Teal */
+}
+
+.stop-left7 {
+    stop-color: #1e2d3d;  /* Indigo */
+}
+
+.stop-right7 {
+    stop-color: #24697d;  /* Teal */
+}
+
+.stop-left8 {
+    stop-color: #1d202a;  /* Indigo */
+}
+
+.stop-right8 {
+    stop-color: #24697d;  /* Teal */
+}
+
+.filled1 {
+    fill: url(#mainGradient1);
+}
+
+.filled2 {
+    fill: url(#mainGradient2);
+}
+
+.filled3 {
+    fill: url(#mainGradient3);
+}
+
+.filled4 {
+    fill: url(#mainGradient4);
+}
+
+.filled5 {
+    fill: url(#mainGradient5);
+}
+
+.filled6 {
+    fill: url(#mainGradient6);
+}
+
+.filled7 {
+    fill: url(#mainGradient7);
+}
+
+.filled8 {
+    fill: url(#mainGradient8);
+}
+
+.filled9 {
+    fill: url(#mainGradient9);
+}
+
+.linechart_div{
+	width: 748px;
+	height: 240px;
+	background-color: #1c1e28;
+	margin: 14px;
+}

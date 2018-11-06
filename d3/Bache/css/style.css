@@ -1,0 +1,506 @@
+/** Regular */
+@font-face {
+  font-family: "San Francisco";
+  font-weight: 400;
+  src: url("../fonts/sanfranciscodisplay-regular-webfont.woff");
+}
+
+body{
+	background-color: #f7f8fa;
+}
+.barchart{
+	width: 90%;
+	height:250px;
+	margin:63px auto;
+}
+select{
+	float:left;
+}
+.piechart{
+	width:150px;
+	height:250px;
+	float:left;
+}
+#PhoneHomeSelect{
+	float:left;
+}
+h1{
+	padding:5px;
+}
+.customer_name{
+    border: 1px solid #555;
+    float: left;
+    padding: 5px;
+    margin: 1px;
+}
+#CustomerNameMonth{
+	margin:20px;
+}
+.width100{
+	width: 100%;
+	display: inline-block;
+}
+#header{
+	width: 1189px;
+	margin: 30px auto;
+}
+.container{
+	width: 1189px;
+	height:350px;
+	margin:30px auto;
+}
+
+
+.panel{
+	background-color: #FFFFFF;
+	border-radius: 4px;
+	box-shadow: 1px 0px 13px 0px rgba(15,31,59,0.11);
+	float:left;
+}
+.first-panel{
+	width: 31.6%;
+	height: 100%;
+}
+.second-panel{
+	width: 48.7%;
+	height: 100%;
+}
+.third-panel{
+	width: 65.77%;
+	height: 100%;
+}
+.panel label{
+    float: left;
+    margin-left: 25px;
+    margin-top: 25px;
+    font-size: 16px;
+    color: #325270;
+    font-family: Raleway;
+    display: inline-block;
+}
+.marginLeft30{
+	margin-left: 2.52%;
+}
+.panel select{
+    float: right;
+    margin-right: 17px;
+    margin-top: 17px;
+    width: 122px;
+    height: 36px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(32,52,107,0.08);
+    border: none;
+    color: #7c92a7;
+    line-height: 19px;
+    font-weight: 400;
+    font-size: 14px;
+    font-family: Lato;
+}
+.gauge{
+	width: 258px;
+	height: 126px;
+/*	border:1px solid black;*/
+	margin:0 auto;
+}
+.gauge1{
+	margin-top: 20px;
+}
+.gauge2{
+	margin-top: 10px;
+}
+.highcharts-axis-title,
+.highcharts-legend-item.highcharts-column-series text{
+	color: #7c92a7 !important;
+	fill: #7c92a7 !important;
+	font-family: Raleway;
+	letter-spacing: 0.13px;
+	font-weight: 500;
+	line-height: 17px;
+	font-size: 13px;
+}
+.highcharts-legend-item.highcharts-pie-series tspan{
+	font-family: Lato;
+	font-weight: 400;
+	font-size:14px;
+	line-height: 19px;
+	opacity: 0.7;
+	color: #325270 !important;
+	fill: #325270 !important;
+}
+.datepicker{
+	width: 250px;
+	height: 289px;
+}
+#PvH{
+	width: 300px;
+	height:270px;
+	margin-left:38px;
+	margin-top: 63px;
+}
+.total-val{
+	color: #2c92eb;
+}
+#List{
+	width: 100%;
+	height: 294px;
+	overflow-y: scroll;
+}
+.listDiv{
+	margin:25px;
+}
+.flArr{
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	text-align: center;
+	float:left;
+}
+.flArr1{
+	background-image: linear-gradient(180deg, #ab98f9 0%, #725fed 100%);
+}
+.flArr2{
+	background-image: linear-gradient(213deg, #ff97ad 0%, #ff4c88 100%);
+}
+.flArr span{
+	margin-top: 5px;
+    display: inline-block;
+    font-size: 11px;
+    color: #ffffff;
+    text-transform: uppercase
+}
+.fullName{
+	float:left;
+	font-size: 15px;
+	font-weight: 400;
+	line-height: 19px;
+	color: #325270;
+	margin-left: 5px;
+    margin-top: 5px;
+}
+.fullDate{
+	float: right;
+	color: #7c92a7;
+	font-size: 15px;
+	font-weight: 400;
+	line-height: 19px;
+    margin-top: 5px;
+}
+#PvH .highcharts-color-1,
+#PvH .highcharts-color-1 rect{
+	fill: #ff6893 !important;
+	color: #ff6893 !important;
+}
+#PvH .highcharts-color-0,
+#PvH .highcharts-color-0 rect{
+	fill: #735ac5 !important;
+	color: #735ac5 !important;
+}
+#QuotedTotal{
+	color: #3bdbd0;
+}
+.wrapper{
+	position:absolute;
+   	height: 600px;
+   	display: block !important;
+}
+.wrapper input{
+	display: none;
+}
+.wrapper .dates .hasDatepicker{
+	top:0px !important;
+}
+.hasDatepicker{
+   	z-index: 99999;
+}
+.dates input {
+   width: 200px;
+}
+.dates div {
+   font-size: 9pt;
+}
+.date-range-selected > .ui-state-active,
+.date-range-selected > .ui-state-default {
+   background: none;
+   background-color: lightsteelblue;
+}
+.bigLetter{
+	font-family:Lato;
+	font-size:34px;
+	color:#325270;
+	font-weight:400;
+	letter-spacing:-0.2px;
+}
+.smallLetter{
+	color: #7c92a7;
+	font-size: 16px;
+	letter-spacing: -0.1px;
+}
+.innerLetter{
+	font-size:13px;
+	color: #7c92a7;
+	font-weight:500;
+	line-height:17px;
+	letter-spacing:0.13px;
+	font-family:Raleway;
+}
+.bartotal{
+	font-family: Lato;
+	font-size: 16px;
+	font-weight: 400;
+	letter-spacing: 0.38px;
+	color: #7c92a7;
+}
+.tooltipCircle{
+	margin-top:5px;
+	border-radius:50%;
+	width:6px;
+	height:6px;
+	float:left;
+/*	background-image:linear-gradient(180deg, #ab98f8 0%, #7c5fed 100%); */
+}
+.tooltipLeft{
+	float:left;
+	margin-left:10px;
+	margin-top:-12px;
+}
+.tooltipText{
+	font-weight: 400;
+	font-size: 11px;
+	letter-spacing: 0.21px;
+	color: #ffffff;
+	opacity: 0.6;
+}
+.tooltipValue{
+	font-family: Lato;
+	font-weight: 500;
+	letter-spacing: 0.21px;
+	color: #ffffff;
+}
+.tooltipHeader{
+	opacity: 0.9;
+	color: #ffffff !important;
+	font-family: Lato;
+	font-size: 11px;
+	font-weight: 500;
+	letter-spacing: 0.07px;
+}
+.divider{
+	width: 100%;
+    height: 2px;
+    background-color: #e9edf6;
+    margin-top: 50px;
+}
+#logo #firstLogo{
+	background-image: url("../img/fill-3.png");
+	width: 21px;
+	height: 22px;
+	float: left;
+	background-size: cover;
+}
+#logo #secondLogo{
+	background-image: url("../img/fill-1.png");
+	width: 105px;
+	height: 25px;
+	float:left;
+	margin-left:8px;
+}
+#slack{
+	background-image: url("../img/slack.png");
+	width: 21px;
+	height: 21px;
+	float:left;
+	margin-left:8px;
+	background-size:cover;
+	cursor: pointer;
+}
+#LoginPage{
+	background-color: #f8f8fa;
+}
+#LoginPage #logo{
+	background-image: url("../img/fill-3.png");
+	width: 46px;
+	height: 48px;
+	background-size: cover;
+	margin: 0 auto;
+	margin-top:94px;
+}
+#LoginText{
+  	font-family: "San Francisco";
+	opacity: 0.8;
+	color: #0a1d44;
+	font-size: 27px;
+	font-weight: 300;
+	letter-spacing: 0.3px;
+	text-align: center;
+	margin-top: 35px;
+}
+#loginForm{
+	margin: 0 auto;
+	margin-top: 40px;
+	width: 300px;
+}
+#loginForm .eachField{
+	width: 100%;
+}
+#loginForm label.title{
+	coor: #7c92a7;
+	font-family: Lato;
+	font-size: 12px;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+#loginForm input.main{
+	width: 286px;
+	height: 32px;
+	border-radius: 100px;
+	border: 1px solid #d1d8e3;
+	background-color: #ffffff;
+	color: #03335f;
+	font-family: Lato;
+	font-size: 14px;
+	font-weight: 400;
+}
+#loginForm input.main:focus{
+	border: 1px solid #02a7df;
+	box-shadow: 0 2px 4px rgba(35,112,157,0.29);
+}
+#loginForm input[type="checkbox"]{
+	width: 14px;
+	height: 14px;
+	border-radius: 2px;
+	border: 1px solid #ccd3d9;
+	background-color: #ffffff;
+	float: left;
+}
+#loginForm input[type="button"]{
+	width: 100%;
+	height: 40px;
+	border:none;
+	border-radius: 100px;
+	background-image: linear-gradient(222deg, #00ccff 0%, #02a7de 100%);
+	text-shadow: 0 1px 2px rgba(25, 79, 110, 0.05);
+	color :#ffffff;
+	font-family: Lato;
+	font-size: 15px;
+	font-weight: 500;
+}
+#loginForm .passwordField{
+	margin-top: 9px;
+}
+#loginForm .checkField{
+	margin-top: 6px;
+}
+#loginForm .checkField label{
+	float:left;
+	color: #7c92a7;
+	font-family: Lato;
+	font-size: 13px;
+	font-weight: 400;
+	margin-left: 9px;
+}
+#loginForm .submitField{
+	margin-top: 19px;
+}
+#LoginPage #contact{
+	margin: 0 auto;
+	margin-top: 20px;
+	width: 300px;
+	text-align: center;
+}
+#LoginPage #contact label{
+	font-family: Lato;
+	font-size: 14px;
+	font-weight: 400;
+	color: #9aadbf;
+}
+#LoginPage #contact label span{
+	color: #325270;
+}
+#header label{
+	font-family: Lato;
+    font-size: 22px;
+    margin-left: 20px;
+    float: left;
+    color: #325270;
+    font-weight: 400;
+}
+@media screen and (max-width: 1200px) {
+	#header{
+		margin-left: 30px;
+	}
+  	.container {
+	    height: 450px;
+	    margin: 25px auto;
+	    width: 1000px;
+	}
+	.panel{
+		text-align: center;
+	}
+	.panel label {
+	    float: none;
+	    margin-left: 0;
+	}
+	.panel select{
+		float: none;
+		margin-right: 0;
+	}
+	.gauge{
+		width: 100%;
+		margin-top: 0;
+	}
+	#PvH{
+		width: 100%;
+		margin: 0;
+		margin-top: 30px;
+	}
+}
+
+@media only screen and (max-width: 1000px) {
+  	.container {
+	    height: 450px;
+	    margin: 19px auto;
+	    width: 768px;
+	}
+	.highcharts-legend-item.highcharts-pie-series tspan {
+	    font-size: 11px;
+	}
+}
+@media only screen and (max-width: 440px){
+	#header {
+	    margin-left: 20px;
+	}
+  	.container {
+	    height: 450px;
+	    margin: 19px auto;
+	    width: 100%;
+	}
+	.first-panel,
+	.second-panel,
+	.third-panel{
+	    width: 90%;
+	    margin-top: 30px;
+	    margin-left: 5%;
+	}
+	.wrapper{
+	   	left: 0px !important;
+	}
+	.wrapper .dates .hasDatepicker{
+		left: 45% !important;
+	}
+	.highcharts-legend-item.highcharts-pie-series tspan {
+	    font-size: 14px;
+	}
+}
+
+@media only screen and (max-width: 360px) {
+	.wrapper .dates .hasDatepicker{
+		left: 37% !important;
+	}
+}
+
+@media only screen and (max-width: 320px) {
+	.wrapper .dates .hasDatepicker{
+		left: 26% !important;
+	}
+}

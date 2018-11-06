@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<html lang="en">
+  <head>
+
+    <title>Scild Innovations</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+    <script src="https://cdn.anychart.com/js/7.13.0/anychart-bundle.min.js"></script>
+    <script src="http://cdn.anychart.com/themes/7.13.0/dark_turquoise.min.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.anychart.com/css/latest/anychart-ui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title>Circular-Gauge-Multiple-Pointers-and-Labels</title>
+  </head>
+
+  <body>
+	  <div id="pkdb" class="chart"></div>
+    <!--
+	  <div id="smallpiechart" class="chart"></div>
+	  <div id="piechart" class="chart"></div>
+  -->
+  </body>
+
+  <script src="js/jquery.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/d3.min.js"></script>
+  <script src="js/anychart.min.js"></script>
+  <script src="js/pkdb.js"></script>
+  <script src="js/smallpiechart.js"></script>
+  <script src="js/piechart.js"></script>
+  <script>
+     $(document).ready(function(){
+        drawpkdb();
+        setInterval(function(){cache_clear()},60000);
+     });
+     function cache_clear(){
+        drawpkdb();
+     }
+  </script>
+</html>

@@ -1,0 +1,82 @@
+#map_canvas {
+    height:700px;
+    width:100%;
+}
+.gm-style-iw * {
+    display: block;
+    width: 100%;
+}
+.gm-style-iw h4, .gm-style-iw p {
+    margin: 0;
+    padding: 0;
+}
+.gm-style-iw a {
+    color: #4272db;
+}
+
+html, body, #map {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.stations, .stations svg {
+  position: absolute;
+}
+
+.stations svg {
+/*  padding-right: 100px;*/
+  font: 10px sans-serif;
+}
+.dialog{
+	position: absolute;
+	display: none;
+	z-index: 99;
+	background: #fff;
+    box-shadow: 0 3px 14px rgba(0,0,0,.4);
+    padding: 1px;
+    text-align: left;
+/*    border-radius: 12px;*/
+}
+.dialog .header{
+	padding-top: 27px;
+    padding-bottom: 2px;
+    padding-left: 18px;
+    padding-right: 18px;
+    color: #fff;
+    opacity: .8;
+    text-shadow: 1px 1px 1px #000;
+    background-color: #1F78B4;
+}
+.dialog .content{
+	padding: 18px;
+}
+.dialog .header h4 {
+    margin: 8px 0 0!important;
+    padding-bottom: 10px;
+}
+.dialog .header p {
+    margin: 2px 0;
+}
+.dialog a.leaflet-popup-close-button {
+    color: #fff!important;
+    padding: 6px 6px 0 0!important;
+    z-index: 999;
+    text-shadow: 0 0 2px #e5e5e5;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 4px 4px 0 0;
+    text-align: center;
+    width: 18px;
+    height: 14px;
+    font: 16px/14px Tahoma,Verdana,sans-serif;
+    color: #c3c3c3;
+    text-decoration: none;
+    font-weight: 700;
+    background: 0 0;
+}
+.category_div{
+    margin-left: 20px;
+}

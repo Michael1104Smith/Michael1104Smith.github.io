@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  	<head>
+    	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+    	<title>Analytics Dashboard</title>
+		
+	    <link rel="stylesheet" href="css/style.css">
+		<script type="text/javascript">
+			var config = [], gauges = [];
+		</script>
+		<script type="text/javascript" src="js/d3.v2.js"></script>
+		<script type="text/javascript" src="js/gauge.js"></script>
+		<script type="text/javascript" src="js/linechart.js"></script>
+	    <script src="js/jquery-1.10.2.js"></script>
+
+	    <script type="text/javascript">
+	    	$(document).ready(function(){
+	    		setInterval(gaugesTimer, 10);
+	    		var firstImages = ["electricity-active", "water-active", "heat-active"];
+	    		var firstColors = ["#ffe156", "#526cff", "#fe2769"];
+	    		Init();
+	       		drawChart();
+	    		drawLineChart('linechart_div', 748, 240);
+	    		$('.each_control_div3').on('click', function(){
+	    			$('.each_control_div3').removeClass('active');
+	    			$('.each_control_div3').addClass('inactive');
+	    			$(this).removeClass('inactive');
+	    			$(this).addClass('active');
+	    			var index = $(this).data('index');
+	    			config[0].circleColor = firstColors[index-1];	    			
+	    			config[0].imageName = firstImages[index-1];
+					var gauge = new Gauge("chart_div1", config[0]);
+					gauges[2] = gauge;
+					gauges[2].render();
+	    		})
+	    	});
+	    	function gaugesTimer(){
+				for(var i = 0; i < 3; i++){
+					gauges[i].onTimer();
+				}
+	    	}
+
+	    	function Init(){
+				config.push({
+					size: 188,
+					min: 0,
+					max: 400,
+					timerMin: 0,
+					timerMax: 400,
+					speed: 1,
+					unitValue: 'kwh',
+					currentValue: 30,
+					valueFontSize: 50,
+					unitFontSize: 20,
+					circleColor: '#ff0',
+					flag: 0,
+					imageName: "electricity-active",
+					backImageName: "bg-circle-line"
+				});
+
+				config.push({
+					size: 185,
+					min: 0,
+					max: 2000,
+					speed: -1,
+					timerMin: 0,
+					timerMax: 2000,
+					unitValue: 'ppm',
+					currentValue: 1000,
+					valueFontSize: 50,
+					unitFontSize: 20,
+					circleColor: '#fff',
+					flag: 1,
+					imageName: "",
+					backImageName: "bg-circle-line-CO2"
+				});
+				config.push({
+					size: 188,
+					min: 0,
+					max: 100,
+					timerMin: 0,
+					timerMax: 100,
+					speed: 1,
+					unitValue: '%',
+					currentValue: 69,
+					valueFontSize: 50,
+					unitFontSize: 20,
+					circleColor: '#1fe9f7',
+					flag: 0,
+					imageName: "humidity-active",
+					backImageName: "bg-circle-line"
+				})
+	    	}
+
+			function drawChart()
+			{
+				for(var i = 1; i <= 3; i++){
+					var gauge = new Gauge("chart_div"+i, config[i-1]);
+					gauges.push(gauge);
+					gauges[i-1].render();
+				}
+			}
+	    </script> 
+
+	</head>
+	
+	<body>
+		<div class="linechart_div">
+		</div>
+		<div class="gaugeschart_div">
+		  	<div class="each_div">
+		  		<div class="chart_div">
+			  		<div class="gauge_div">
+				  		<div id="chart_div1" style="position: absolute;"></div>
+			  		</div>
+		  		</div>
+		  		<div class="control_div">
+		  			<div class="each_control_div3 each_control_div active" data-index="1">
+		  				<div class="inner_control"><div class="Electricity image"></div></div>
+		  				<div class="inner_control"><div class="txt">Electricity</div></div>
+		  			</div>
+		  			<div class="each_control_div3 each_control_div inactive" data-index="2">
+		  				<div class="inner_control"><div class="Water image"></div></div>
+		  				<div class="inner_control"><div class="txt">Water</div></div>
+		  			</div>
+		  			<div class="each_control_div3 each_control_div inactive" data-index="3">
+		  				<div class="inner_control"><div class="Heat image"></div></div>
+		  				<div class="inner_control"><div class="txt">Heat</div></div>
+		  			</div>
+		  		</div>
+		    </div>
+		  	<div class="each_div">
+		  		<div class="chart_div">
+			  		<div class="gauge_div">
+				  		<div id="chart_div2" style="position: absolute;"></div>
+			  		</div>
+		  		</div>
+		  		<div class="control_div">
+		  			<div class="each_control_div1 each_control_div inactive">
+		  				<div class="inner_control"><div class="Co2 image"></div></div>
+		  				<div class="inner_control"><div class="txt">Co2</div></div>
+		  			</div>
+		  		</div>
+		    </div>
+		  	<div class="each_div">
+		  		<div class="chart_div">
+			  		<div class="gauge_div">
+				  		<div id="chart_div3" style="position: absolute;"></div>
+			  		</div>
+		  		</div>
+		  		<div class="control_div">
+		  			<div class="each_control_div1 each_control_div inactive">
+		  				<div class="inner_control"><div class="Humidity image"></div></div>
+		  				<div class="inner_control"><div class="txt">Humidity</div></div>
+		  			</div>
+		  		</div>
+		    </div>	    
+	    </div>
+	</body>
+</html>

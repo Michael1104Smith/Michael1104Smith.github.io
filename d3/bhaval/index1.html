@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+function circleGen() {
+  //set defaults
+  var r = function(d) { return d.radius; },
+      x = function(d) { return d.x; },
+      y = function(d) { return d.y; };
+  
+  //returned function to generate circle path
+  function circle(d) {
+    var cx = d3.functor(x).call(this, d),
+        cy = d3.functor(y).call(this, d),
+        myr = d3.functor(r).call(this, d);
+
+    return "M" + cx + "," + cy + " " +
+           "m" + -myr + ", 0 " +
+           "a" + myr + "," + myr + " 0 1,0 " + myr*2  + ",0 " +
+           "a" + myr + "," + myr + " 0 1,0 " + -myr*2 + ",0Z";
+  }
+  
+  //getter-setter methods
+  circle.r = function(value) {
+    if (!arguments.length) return r; r = value; return circle;
+  };  
+  circle.x = function(value) {
+    if (!arguments.length) return x; x = value; return circle;
+  };  
+  circle.y = function(value) {
+    if (!arguments.length) return y; y = value; return circle;
+  };
+  
+  return circle;
+}
+
+var svg = d3.select("body").append("svg")
+    .attr("width", "500px")
+    .attr("height", "500px");
+
+var myC = circleGen()
+   .x(function(d) { return d.x; })
+   .y(function(d) { return d.y; })
+   .r(function(d) { return d.r; });
+
+var data = [
+  {x: 80, y: 120, r: 40, fill: "black"},
+  {x: 200, y: 150, r: 5, fill: "red"},
+  {x: 100, y: 250, r: 25, fill: "blue"}
+];
+
+svg.selectAll("path.circle")
+    .data(data)
+  .enter().append("path")
+	.attr("class", "circle")
+    .attr("d", myC)
+    .style("fill", function(d) { return d.fill; });
+
+</script>

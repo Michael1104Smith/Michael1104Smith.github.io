@@ -1,0 +1,101 @@
+/* Webfont: Lato-Thin */@font-face {
+    font-family: 'LatoWebThin';
+    src: url('fonts/Lato-Thin.eot'); /* IE9 Compat Modes */
+    src: url('fonts/Lato-Thin.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('fonts/Lato-Thin.woff2') format('woff2'), /* Modern Browsers */
+         url('fonts/Lato-Thin.woff') format('woff'), /* Modern Browsers */
+         url('fonts/Lato-Thin.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+/* Webfont: Lato-Light */@font-face {
+    font-family: 'LatoWebLight';
+    src: url('fonts/Lato-Light.eot'); /* IE9 Compat Modes */
+    src: url('fonts/Lato-Light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('fonts/Lato-Light.woff2') format('woff2'), /* Modern Browsers */
+         url('fonts/Lato-Light.woff') format('woff'), /* Modern Browsers */
+         url('fonts/Lato-Light.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: Lato-Regular */@font-face {
+    font-family: 'LatoWeb';
+    src: url('fonts/Lato-Regular.eot'); /* IE9 Compat Modes */
+    src: url('fonts/Lato-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('fonts/Lato-Regular.woff2') format('woff2'), /* Modern Browsers */
+         url('fonts/Lato-Regular.woff') format('woff'), /* Modern Browsers */
+         url('fonts/Lato-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+body{
+	font-family: LatoWeb;
+	background-color: #161722;
+}
+
+
+.barchart_div{
+	width: 761px;
+	height: 285px;
+	background-color: #242734;
+	margin: 14px;
+}
+.barchart_div .header,
+.barchart_div .barchart{
+    float: left;
+}
+.barchart_div .header{
+    margin-bottom: 25px;
+}
+
+.barchart_div .label_div,
+.barchart_div .feature_div{
+    float: left;
+    padding: 12px;
+}
+.barchart_div .feature_div{
+    margin-left: 189px;
+}
+.barchart_div label{
+    color: white;
+}
+
+.barchart_div .label_div label{
+    font-family: LatoWeb;
+    font-size: 18px;
+}
+.barchart_div .feature_div label{
+    font-family: LatoWeb;
+    font-size: 13px;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 7px 5px 5px;
+    margin-left: 5px;
+}
+.barchart_div .feature_div label.active{
+    color: #242734;
+}
+.barchart_div .feature_div label.Electricity.active{
+    background-color: #F3DC3D;
+}
+.barchart_div .feature_div label.Water.active{
+    background-color: #526CFF;
+}
+.barchart_div .feature_div label.Heat.active{
+    background-color: #F32268;
+}
+.gauges_div{
+    width: 268px;
+    height: 322px;
+    margin:30px;
+}
+.gauges_div .gauge_div{
+    width: 100%;
+    height:32%;
+    margin:0.67% 0;
+    background-color: #242734;
+}

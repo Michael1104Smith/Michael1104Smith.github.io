@@ -1,0 +1,22 @@
+﻿<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="refresh" content="60">
+    <link rel="stylesheet" href="css/anychart-ui.css" />
+    <link rel="stylesheet" href="css/DBStage02.css" />
+  </head>
+  <body>
+    <div id="container"></div>
+  </body>
+	<script src="js/d3.min.js"></script>
+  	<script src="js/jquery.js"></script>
+	<script src="js/anychart-bundle.min.js"></script>
+	<script src="js/dark_turquoise.min.js"></script>
+	<script src="js/DBStage02.js"></script>
+	<script text="javascript">
+     $(document).ready(function(){
+        drawDBStage02();
+        setInterval(function(){cache_clear()},60000);
+     });
+	</script>
+</html>

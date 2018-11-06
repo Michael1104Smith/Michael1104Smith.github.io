@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  	<head>
+    	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+    	<title>Analytics Dashboard</title>
+		
+	    <link rel="stylesheet" href="css/style.css">
+		<script type="text/javascript" src="js/d3.v2.js"></script>
+		<script type="text/javascript" src="js/gauge.js"></script>
+		<script type="text/javascript" src="js/barchart.js"></script>
+	    <script src="js/jquery-1.10.2.js"></script>
+
+	    <script type="text/javascript">
+	    	var width = 761, height = 204;
+	    	var config = [], gauges = [];
+	    	$(document).ready(function(){
+	    		setInterval(gaugesTimer, 10);
+	    		drawBarChart('barchart', width, height, 0);
+	    		Init();
+	    		drawGauges();
+	    		$('.feature_div label').on('click', function(){
+	    			var ind = $(this).data('index');
+	    			drawBarChart('barchart', width, height, ind);
+	    			$('.feature_div label').removeClass('active');
+	    			$(this).addClass('active');
+	    		})
+	    	});
+	    	function gaugesTimer(){
+				for(var i = 0; i < 3; i++){
+					gauges[i].onTimer();
+				}
+	    	}
+	    	function Init(){
+				config.push({
+					size: 95,
+					width: 268,
+					height: 103,
+					min: 0,
+					max: 100,
+					timerMin: 500,
+					timerMax: 17000,
+					expectedValue: 598,
+					actualValue: 10563,
+					speed: 1,
+					unitValue: 'kW',
+					textFontSize: 19.54,
+					unitFontSize: 14.24,
+					percentFontSize: 16,
+					circleColor: '#fedc3d',
+					text: 'Electricity',
+					bottomPercent: 18,
+					updown: 0,
+					middleImage: 'electricity-active',
+					middleImageWidth: 15,
+					middleImageHeight: 26
+				});
+				config.push({
+					size: 95,
+					width: 268,
+					height: 103,
+					min: 0,
+					max: 100,
+					timerMin: 50,
+					timerMax: 150,
+					expectedValue: 70,
+					actualValue: 100,
+					speed: -1,
+					unitValue: 'm^3',
+					textFontSize: 19.54,
+					unitFontSize: 14.24,
+					percentFontSize: 16,
+					circleColor: '#526cff',
+					text: 'Water',
+					bottomPercent: 28,
+					updown: 1,
+					middleImage: 'water-active',
+					middleImageWidth: 26,
+					middleImageHeight: 31
+				});
+				config.push({
+					size: 95,
+					width: 268,
+					height: 103,
+					min: 0,
+					max: 100,
+					timerMin: 4000,
+					timerMax: 6000,
+					expectedValue: 4500,
+					actualValue: 5000,
+					speed: 1,
+					unitValue: 'kW',
+					currentValue: 230,
+					textFontSize: 19.54,
+					unitFontSize: 14.24,
+					percentFontSize: 16,
+					circleColor: '#fe2769',
+					text: 'Heat',
+					bottomPercent: 48,
+					updown: 1,
+					middleImage: 'heat-active',
+					middleImageWidth: 15,
+					middleImageHeight: 26
+				});
+	    	}
+	    	function drawGauges(){
+	    		for(i = 0; i < 3; i++){
+					var gauge = new Gauge("gauge_div"+(i+1), config[i]);
+					gauges.push(gauge);
+					gauges[i].render();
+	    		}
+	    	}
+	    </script> 
+
+	</head>
+	
+	<body>
+		<div class="barchart_div">
+			<div class="header">
+				<div class="label_div">
+					<label>Real-Time Consumption February 2017</label>
+				</div>
+				<div class="feature_div">
+					<label class="Electricity active" data-index="0">Electricity</label>
+					<label class="Water" data-index="1">Water</label>
+					<label class="Heat" data-index="2">Heat</label>
+				</div>
+			</div>
+			<div class="barchart"></div>
+		</div>
+		<div class="gauges_div">
+			<div class="gauge_div" id="gauge_div1"></div>
+			<div class="gauge_div" id="gauge_div2"></div>
+			<div class="gauge_div" id="gauge_div3"></div>
+		</div>
+	</body>
+</html>

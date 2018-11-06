@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="graph-benchmark.css" rel="stylesheet">
+	</head>
+	<body>
+		<div id="graph"></div>
+		
+		<div id="graph-2"></div>
+		
+		<script src="graph-benchmark.js"></script>
+		<script>
+			
+			var graph = graphBenchmark;
+			
+			graph.init({
+				canvas: document.getElementById( 'graph' ),
+				title: 'Total Claims',
+				hasComparison: true,
+				comparisonColor: '#4bb96d',
+				benchmarkLabel: 'Benchmark',
+				benchmarkValue: 1000000,
+				actualLabel: 'Actual',
+				actualValue: 500000,
+				valuePrepend: '$',
+				valueAppend: '',
+				colorOver: '#e74c3c', // Color for actual value OVER benchmark
+				colorUnder: '#4bb96d' // Color for actual value UNDER benchmark
+			});
+			
+			var graphTwo = graphBenchmark;
+			
+			graphTwo.init({
+				canvas: document.getElementById( 'graph-2' ),
+				title: 'Spouce',
+				hasComparison: false,
+				benchmarkLabel: 'Benchmark',
+				benchmarkValue: .02,
+				benchmarkGradient: '#6a808c, #9da4ad',
+				actualLabel: 'Actual',
+				actualValue: .04,
+				actualColor: '#e74c3c',
+				valuePrepend: '',
+				valueAppend: '%',
+				maxValue: 0.1, // Use maxValue to offset 100% height
+				colorOver: '#e74c3c',
+				colorUnder: '#4bb96d'
+			});
+			
+		</script>
+	</body>
+</html>
