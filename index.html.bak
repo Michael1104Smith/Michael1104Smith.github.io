@@ -49,8 +49,6 @@
           <ul class="nav nav-tabs tabs-left">
             <li class="active"><a href="#d3" data-toggle="tab"><img class="skills_logo_img" src="assets/images/d3.png" alt="D3.js logo">D3.js</a></li>
             <li><a href="#angular" data-toggle="tab"><img class="skills_logo_img" src="assets/images/angular.png" alt="Angular.js logo">Angular.js</a></li>
-            <li><a href="#react" data-toggle="tab"><img class="skills_logo_img" src="assets/images/react.png" alt="React.js logo">React.js</a></li>
-            <li><a href="#other" data-toggle="tab"><img class="skills_logo_img" src="assets/images/other.png" alt="Other logo">Other</a></li>
           </ul>
         </div>
 

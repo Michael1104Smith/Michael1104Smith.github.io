@@ -83,7 +83,7 @@
 }
 
 .about_overlay{
-	background: rgba(218,97,30,0.5);
+	background: rgba(235,230,10,0.5);
 	width: 100%;
 	height: 100%;
 	position: absolute;
