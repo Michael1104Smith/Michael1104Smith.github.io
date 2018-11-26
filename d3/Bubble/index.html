@@ -22,7 +22,7 @@
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        d3.text("data/Viz Startups Nov 21 v1.csv", function(data){
+        d3.text("data/Viz Startups Nov 21 v1.txt", function(data){
             var lines = data.split("\r");
             var headerNames = lines[0].split(";");
             var count = headerNames.length;
