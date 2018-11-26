@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <link href="style/style.css" rel="stylesheet" type="text/css"> 
+  </head>
+<body>
+    <div style="opacity: 0;height:0" id="calc"></div>
+    <div id="graphical_bubble"></div>
+    <div id="div_map_bubble"><svg id="map_bubble"></svg></div>
+</body>
+<script type="text/javascript">
+    var yearIndex = 2;
+    var locationIndex = 1;
+    var graphical_bubble_height = 50;
+    var headerFontSize = 20, yearFontSize = 10, circleFontSize = 10;
+</script>
+<script src="js/d3.v3.min.js"></script>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/topojson.v0.min.js"></script>
+<script src="js/topojson.v1.min.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        d3.text("data/Viz Startups Nov 21 v1.csv", function(data){
+            var lines = data.split("\r\n");
+            var headerNames = lines[0].split(";");
+            var count = headerNames.length;
+            var allData = [];
+            let i, j, k;
+            for(i = 0; i < count; i++){
+                allData.push([]);
+            }
+            for(i = 1; i < lines.length; i++){
+                var line = lines[i].split(";");
+                for(j = 0; j < count; j++){
+                    if(line[yearIndex] && line[yearIndex].length > 0)
+                    allData[j].push(line[j]);
+                }
+            }
+            for(i = 0; i < allData[yearIndex].length-1; i++){
+                for(j = i+1; j < allData[yearIndex].length; j++){
+                    if(allData[yearIndex][i] > allData[yearIndex][j]){
+                        for(k = 0; k < count; k++){
+                            var tmp = allData[k][i];
+                            allData[k][i] = allData[k][j];
+                            allData[k][j] = tmp;
+                        }
+                    }
+                }
+            }
+            var yearArr = [];
+            for(i = 0; i < allData[yearIndex].length; i++){
+                var year = allData[yearIndex][i];
+                for(j = 0; j < yearArr.length; j++){
+                    if(allData[yearIndex][i] == yearArr[j]) break;
+                }
+                if(j == yearArr.length) yearArr.push(year);
+            }
+            let graphical_bubble = d3.select("#graphical_bubble"), maxHeaderWidth = 0;
+            for(i = 0; i < headerNames.length; i++)        {
+                if(i != yearIndex){
+                    let svg = d3.select("#calc").append("svg");
+                    var text = svg.append("text")
+                        .attr("x", 0)
+                        .attr("y", graphical_bubble_height/2+headerFontSize/3)
+                        .attr("font-size", headerFontSize)
+                        .text(headerNames[i]);
+                    var x = text.node().getComputedTextLength()+10;
+                    maxHeaderWidth = Math.max(maxHeaderWidth, x);
+                }
+            }
+            for(i = 0; i < count; i++){
+                if(i != yearIndex){
+                    let mainStrArr = [], mainNumberArr = [], colorArr = [];
+                    for(j = 0; j < allData[i].length; j++){
+                        let str = allData[i][j], k = 0;
+                        for(k = 0; k < mainStrArr.length; k++){
+                            if(mainStrArr[k] == str) break;
+                        }
+                        if(k == mainStrArr.length){
+                            mainStrArr.push(str);
+                            colorArr.push(getRandomColor());
+                        }
+                    }
+                    for(j = 0; j < yearArr.length; j++){
+                        let tmp = [];
+                        for(k = 0; k < mainStrArr.length; k++) tmp.push(0);
+                        mainNumberArr.push(tmp);
+                    }
+                    let maxValue = 0;
+                    for(j = 0; j < allData[i].length; j++){
+                        let str = allData[i][j], year = allData[yearIndex][j];
+                        let strInd = 0, yearInd = 0;
+                        for(strInd = 0; strInd < mainStrArr.length; strInd++){
+                            if(str == mainStrArr[strInd]) break;
+                        }
+                        for(yearInd = 0; yearInd < yearArr.length; yearInd++){
+                            if(year == yearArr[yearInd]) break;
+                        }
+                        mainNumberArr[yearInd][strInd]++;
+                        maxValue = Math.max(maxValue, mainNumberArr[yearInd][strInd]);
+                    }
+                    let headerName = headerNames[i];
+                    let idName = headerName.split(' ').join('_').split(')').join('').split('(').join('');
+                    graphical_bubble.append("div")
+                                    .attr("id", idName)
+                                    .style("height", (graphical_bubble_height+yearFontSize*2)+"px");
+                    drawGraphicBubble(idName, headerName, yearArr, mainStrArr, mainNumberArr, colorArr, maxValue, maxHeaderWidth);
+                }
+            }
+            var locationData = [], locationVal = [];
+            maxValue = 1;
+            for(i = 0; i < allData[locationIndex].length; i++){
+                var loc = allData[locationIndex][i];
+                for(j = 0; j < locationData.length; j++){
+                    if(loc == locationData[j]) break;
+                }
+                if(j < locationData.length){
+                    locationVal[j]++;
+                    maxValue = Math.max(maxValue, locationVal[j]);
+                }else{
+                    locationData.push(loc);
+                    locationVal.push(1);
+                }
+            }
+            
+            d3.json("data/cities.json", function(error, latLonList){
+                drawMapBubble("#map_bubble", locationData, locationVal, latLonList, maxValue);
+            });
+        });
+    })
+</script>
+</html>
