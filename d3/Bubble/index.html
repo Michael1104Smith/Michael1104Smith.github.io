@@ -6,13 +6,15 @@
   </head>
 <body>
     <div style="opacity: 0;height:0" id="calc"></div>
+    <div id="tooltip"></div>
     <div id="graphical_bubble"></div>
     <div id="div_map_bubble"><svg id="map_bubble"></svg></div>
 </body>
 <script type="text/javascript">
     var yearIndex = 2;
     var locationIndex = 1;
-    var graphical_bubble_height = 50;
+    var graphical_bubble_height = 50, legendHeight = 30;
+    var legendCircleSize = 5, legendFontSize = 10;
     var headerFontSize = 20, yearFontSize = 10, circleFontSize = 10;
 </script>
 <script src="js/d3.v3.min.js"></script>
@@ -23,7 +25,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         d3.text("data/Viz Startups Nov 21 v1.txt", function(data){
-            var lines = data.split("\r");
+            var lines = data.split("\r\n");
             var headerNames = lines[0].split(";");
             var count = headerNames.length;
             var allData = [];
@@ -105,7 +107,7 @@
                     let idName = headerName.split(' ').join('_').split(')').join('').split('(').join('');
                     graphical_bubble.append("div")
                                     .attr("id", idName)
-                                    .style("height", (graphical_bubble_height+yearFontSize*2)+"px");
+                                    .style("height", (graphical_bubble_height+yearFontSize*2+legendHeight)+"px");
                     drawGraphicBubble(idName, headerName, yearArr, mainStrArr, mainNumberArr, colorArr, maxValue, maxHeaderWidth);
                 }
             }

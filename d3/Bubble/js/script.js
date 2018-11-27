@@ -11,33 +11,57 @@ function drawGraphicBubble(idName, headerName, yearArr, mainStrArr, mainNumberAr
     $("#"+idName).html("");
     var svg = d3.select("#"+idName).append("svg")
                 .style("width", "100%")
-                .style("height", (graphical_bubble_height+yearFontSize*2)+"px");
+                .style("height", (graphical_bubble_height+yearFontSize*2+legendHeight)+"px");
+    var legendG = svg.append("g");
     var axisG = svg.append("g");
     var circleG = svg.append("g");
     var textG = svg.append("g");
+    var startY = legendHeight;
+    var i, j;
+    var x = legendCircleSize*2;
+    for(i = 0; i < mainStrArr.length; i++){
+        legendG.append("circle")
+                .attr("cx", x)
+                .attr("cy", legendHeight/2)
+                .attr("r", legendCircleSize)
+                .attr("fill", colorArr[i]);
+        var txt = legendG.append("text")
+                .attr("x", x+legendCircleSize*2)
+                .attr("y", legendHeight/2+legendFontSize/3)
+                .attr("font-size", legendFontSize)
+                .text(mainStrArr[i]);
+        x += legendCircleSize*4+txt.node().getComputedTextLength();
+    }
+    var maxX = x;
     var text = svg.append("text")
         .attr("x", 0)
-        .attr("y", graphical_bubble_height/2+headerFontSize/3)
+        .attr("y", startY+graphical_bubble_height/2+headerFontSize/3)
         .attr("font-size", headerFontSize)
         .text(headerName);
-    var x = maxHeaderWidth;
+    x = maxHeaderWidth;
     for(i = 0; i < yearArr.length; i++){
         var flag = false, prevX = x;
         for(j = 0; j < mainStrArr.length; j++){
             var val = mainNumberArr[i][j];
             if(val > 0){
                 var size = 25*val/maxValue;
-                circleG.append("circle")
+                var mainG = circleG.append("g")
+                            .attr("class", "circleMG")
+                            .attr("headerName", headerName)
+                            .attr("Value", val)
+                            .attr("str", mainStrArr[j])
+                            .attr("year", yearArr[i]);
+                mainG.append("circle")
                     .attr("cx", x)
-                    .attr("cy", graphical_bubble_height/2)
+                    .attr("cy", startY+graphical_bubble_height/2)
                     .attr("r", size)
                     .attr("fill", colorArr[j]);
-                circleG.append("text")
-                    .attr("x", x)
-                    .attr("y", graphical_bubble_height/2+circleFontSize/3)
-                    .attr("font-size", circleFontSize)
-                    .attr("text-anchor", "middle")
-                    .text(val);
+                mainG.append("text")
+                .attr("x", x)
+                .attr("y", startY+graphical_bubble_height/2+circleFontSize/3)
+                .attr("font-size", circleFontSize)
+                .attr("text-anchor", "middle")
+                .text(val);
                 x += size;
                 flag = true;
             }
@@ -45,7 +69,7 @@ function drawGraphicBubble(idName, headerName, yearArr, mainStrArr, mainNumberAr
         if(flag) {
             textG.append("text")
                 .attr("x", prevX)
-                .attr("y", graphical_bubble_height+yearFontSize)
+                .attr("y", startY+graphical_bubble_height+yearFontSize)
                 .attr("font-size", yearFontSize)
                 .attr("text-anchor", "middle")
                 .text(yearArr[i]);
@@ -54,12 +78,48 @@ function drawGraphicBubble(idName, headerName, yearArr, mainStrArr, mainNumberAr
     }
     axisG.append("rect")
         .attr("x", maxHeaderWidth)
-        .attr("y", graphical_bubble_height/2)
+        .attr("y", startY+graphical_bubble_height/2)
         .attr("width", x-maxHeaderWidth)
         .attr("height", 1)
         .attr("fill", "black");
     var bodyWidth = $('body').width();
-    if(x > bodyWidth) $("body").css("width", x+"px");
+    maxX = Math.max(x, maxX);
+    if(maxX > bodyWidth) $("body").css("width", maxX+"px");
+    var circleMG = circleG.selectAll(".circleMG");
+    circleMG.on("mouseover", function() {
+        var sel = d3.select(this);
+        var headerName  = sel.attr("headerName");
+        var Value  = sel.attr("Value");
+        var str  = sel.attr("str");
+        var year  = sel.attr("year");
+        var arr = [headerName, year, str, Value];
+        var name = ["Header", "Year", "String", "Value"];
+        hoverTooltip(arr, name);
+    })					
+    .on("mouseout", function(d) {	
+        outTooltip();
+    });
+}
+
+function hoverTooltip(arr, name){
+    var html = "";
+    for(var q = 0; q < arr.length; q++){
+        html += "<div style='padding:5px'><strong>"+name[q]+":</strong> <span style='color:red'>" + arr[q] + "</span></div>";
+    }
+    var tooltip = d3.select("#tooltip");
+    tooltip.transition()		
+        .duration(200)		
+        .style("opacity", .9);		
+    tooltip	.html(html)	
+        .style("left", (d3.event.pageX) + "px")		
+        .style("top", (d3.event.pageY - 28) + "px");	
+}
+
+function outTooltip(){
+    var tooltip = d3.select("#tooltip");	
+    tooltip.transition()		
+        .duration(500)		
+        .style("opacity", 0);	
 }
 
 function getLatLonfromCity(str, latLonList, val){
@@ -129,7 +189,15 @@ function drawMapBubble(idName, locationData, locationVal, latLonList, maxValue){
                 return 30*d.val/maxValue;
             })
             .style("fill", "#a797df")
-            .style("fill-opacity", 0.5);
+            .style("fill-opacity", 0.5)
+            .on("mouseover", function(d){
+                var arr = [d.country, d.city, d.val];
+                var name = ["Country", "City", "Value"];
+                hoverTooltip(arr, name);
+            })				
+            .on("mouseout", function(d) {	
+                outTooltip();
+            });
     });
 
     // zoom and pan
