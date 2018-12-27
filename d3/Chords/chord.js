@@ -89,7 +89,6 @@ function updateChords( datasetURL ) {
     
     /* Compute chord layout. */
     layout = getDefaultLayout(); //create a new layout object
-    console.log(chord(matrix));
     layout.matrix(matrix);
  
     /* Create/update "group" elements */

@@ -7,7 +7,7 @@ function getRandomColor() {
     return color;
 }
   
-function drawGraphicBubble(idName, headerName, yearArr, mainStrArr, mainNumberArr, colorArr, maxValue, maxHeaderWidth){
+function drawGraphicBubble(idName, headerName, yearArr, yearNumberArr, mainStrArr, mainNumberArr, colorArr, maxValue, maxHeaderWidth){
     $("#"+idName).html("");
     var svg = d3.select("#"+idName).append("svg")
                 .style("width", "100%")
@@ -41,10 +41,16 @@ function drawGraphicBubble(idName, headerName, yearArr, mainStrArr, mainNumberAr
     x = maxHeaderWidth;
     for(i = 0; i < yearArr.length; i++){
         var flag = false, prevX = x;
+        circleG.append("circle")
+            .attr("cx", x)
+            .attr("cy", startY+graphical_bubble_height/2)
+            .attr("r", yearNumberArr[i]/maxValue*graphical_bubble_height/2)
+            .attr("fill", "#a797df")
+            .attr("opacity", 0.5);
         for(j = 0; j < mainStrArr.length; j++){
             var val = mainNumberArr[i][j];
             if(val > 0){
-                var size = 25*val/maxValue;
+                var size = graphical_bubble_height/2*val/maxValue;
                 var mainG = circleG.append("g")
                             .attr("class", "circleMG")
                             .attr("headerName", headerName)
@@ -176,7 +182,7 @@ function drawMapBubble(idName, locationData, locationVal, latLonList, maxValue){
             .enter()
             .append("a")
             .attr("xlink:href", function(d) {
-                return "https://www.google.com/search?q="+d.city;}
+                return "https://www.google.com/search?q="+d.country;}
             )
             .append("circle")
             .attr("cx", function(d) {
@@ -191,8 +197,8 @@ function drawMapBubble(idName, locationData, locationVal, latLonList, maxValue){
             .style("fill", "#a797df")
             .style("fill-opacity", 0.5)
             .on("mouseover", function(d){
-                var arr = [d.country, d.city, d.val];
-                var name = ["Country", "City", "Value"];
+                var arr = [d.city, d.country, d.val];
+                var name = ["City", "Country", "Value"];
                 hoverTooltip(arr, name);
             })				
             .on("mouseout", function(d) {	
