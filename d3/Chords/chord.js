@@ -62,6 +62,8 @@ g.append("circle")
 
 d3.csv("regionsfish.csv", function(error, regionData) {
 
+    
+
     if (error) {alert("Error reading file: ", error.statusText); return; }
     
     regions = regionData; 
