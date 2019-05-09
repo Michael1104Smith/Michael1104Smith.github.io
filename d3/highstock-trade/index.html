@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Price and Volume CandleStick Chart</title>
+    <style>
+        #candle_sector {
+            position: absolute;
+            left: 20px;
+            top: 75px;
+        }
+        
+        .highcharts-plot-line-label {
+            fill: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="container" style="height: 800px; min-width: 310px">
+    </div>
+    <select id="candle_sector">
+        <option value="1min">1 Min</option>
+        <option value="5min">5 Min</option>
+        <option value="15min">15 Min</option>
+        <option value="30min">30 Min</option>
+        <option value="1hr">1 Hour</option>
+        <option value="1d">1 Day</option>
+        <option value="3d">3 Days</option>
+        <option value="1w">1 Week</option>
+        <option value="1m">1 Month</option>
+    </select>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="assets/themes/dark-unica.js"></script>
+
+    <script>
+        $.getJSON('trades1.json', function(data) {
+
+            data.sort(custom_sort);
+
+            var org_data = data;
+
+            var duration = 1;
+            var data = transformJson(data, duration);
+
+            // split the data set into ohlc and Volume
+            var ohlc = [],
+                volume = [],                
+                dataLength = data.length,
+                // set the allowed units for data grouping
+                groupingUnits = [
+                    [
+                        'minute', // unit name
+                        [1, 5, 15, 30] // allowed multiples
+                    ],
+                    [
+                        'hour', [1]
+                    ],
+                    ['day', [1, 3]],
+                    ['week', [1]],
+                    ['month', [1]]
+                ],
+
+                i = 0;
+            
+            var latestPrice = data[dataLength - 1][4];
+            for (i; i < dataLength; i += 1) {
+                ohlc.push([
+                    data[i][0], // the date
+                    data[i][1], // open
+                    data[i][2], // high
+                    data[i][3], // low
+                    data[i][4] // close
+                ]);                            
+                
+                volume.push({
+                    x: data[i][0], // the date
+                    y: data[i][5], // the Volume
+                    color: '#111111'
+                });                
+            }
+
+            // create the chart
+            var chart1 = Highcharts.stockChart('container', {
+                chart: {
+                    zoomType: 'x',
+                    margin: [10, 80, 10, 10],
+                    resetZoomButton: {
+                        position: {
+                            x: 0,
+                            y: -100
+                        }
+                    },                    
+                    events: {   
+                        load: function(event) {
+                            // Get the volume series by id.
+                            var volSeries = this.series.find(function(s) {
+                            return s.userOptions.id === 'volume';
+                            });            
+                            // Override the poitAttribs function on the volume series.
+                            volSeries.pointAttribs = (function(original) {                
+                            return function(point, state) {                                                    
+                                // Call the original pointAttribs function.
+                                var attribs = original.apply(this, arguments);
+
+                                // Get the price series using the id.
+                                var priceSeries = point.series.chart.series.find(function(s) {
+                                return s.userOptions.id === 'price';
+                                });
+                                
+                                // Find the candle corresponding to the current volume point.
+                                var candle;
+                                if (point.series.hasGroupedData) {
+                                // With grouped data, we need to find the candle from the grouped data.
+                                var datagroup = point.dataGroup;
+                                var groupIdx = point.series.groupMap.indexOf(datagroup);
+
+                                candle = priceSeries.groupedData[groupIdx];
+                                } else {
+                                // Non-grouped data, we can just use the normal data.
+                                candle = priceSeries.data[point.index];
+                                }
+
+                                // Choose the color for the volume point based on the candle properties.
+                                var color = 'red';
+                                if (candle.close > candle.open) {
+                                color = 'red';
+                                } else if (candle.close < candle.open) {
+                                color = 'green';
+                                }
+                                // Set the volume point's attribute(s) accordingly.
+                                attribs.fill = color;
+                                // Return the updated attributes.
+                                return attribs;
+                                            
+                            };
+                            })(volSeries.pointAttribs);
+                            // Need to call update so the changes get taken into account on first draw.
+                            this.update({});
+                        }
+                    }            
+                },                
+                plotOptions: {
+                    candlestick: {
+                        color: 'green',
+                        upColor: 'red'
+                    }
+                },
+                rangeSelector: {
+                    buttons: [{
+                        count: 1,
+                        type: 'minute',
+                        text: '1m'
+                    }, {
+                        count: 5,
+                        type: 'minute',
+                        text: '5m'
+                    }, {
+                        count: 15,
+                        type: 'minute',
+                        text: '15m'
+                    }, {
+                        count: 30,
+                        type: 'minute',
+                        text: '30m'
+                    }, {
+                        count: 1,
+                        type: 'hr',
+                        text: '1H'
+                    }, {
+                        count: 1,
+                        type: 'day',
+                        text: '1D'
+                    }, {
+                        count: 3,
+                        type: 'day',
+                        text: '3D'
+                    }, {
+                        count: 1,
+                        type: 'week',
+                        text: '1W'
+                    }, {
+                        count: 1,
+                        type: 'month',
+                        text: '1M'
+                    }, {
+                        type: 'all',
+                        text: 'All'
+                    }],
+                    inputEnabled: false,
+                    selected: 9,
+                    x: 100,
+                    y: 20
+                },
+
+                title: {
+                    text: 'Price and Volume'
+                },
+
+                yAxis: [{
+                    labels: {
+                        align: 'right',
+                        x: 40,
+                        y: 5
+                    },
+                    height: '100%',
+                    lineWidth: 2,
+                    resize: {
+                        enabled: true
+                    },
+                    plotLines: [{
+                        value: latestPrice,
+                        color: 'green',
+                        dashStyle: 'shortdash',
+                        width: 2,
+                        label: {
+                            align: 'right',
+                            text: latestPrice,
+                            x: 60,
+                            y: 5
+                        }
+                    }]
+                }, {
+                    labels: {
+                        enabled: false,
+                    },
+                    gridLineWidth: 0,
+                    minorGridLineWidth: 0,
+                    top: '80%',
+                    height: '20%',
+                    offset: 0,
+                    lineWidth: 0,
+                    minorTickLength: 0,
+                    tickLength: 0
+                }],
+
+                tooltip: {
+                    split: true
+                },
+                navigator: {
+                    enabled: false
+                },
+                scrollbar:{
+                    // enabled: false
+                },
+                series: [{
+                    type: 'candlestick',
+                    name: 'Price',
+                    id: 'price',
+                    data: ohlc,                    
+                    dataGrouping: {
+                        units: [
+                            ['minute', [10]]
+                        ]
+                    }
+                },{
+                    type: 'column',
+                    name: 'Volume',
+                    data: volume,                    
+                    yAxis: 1,        
+                    id: 'volume',           
+                    dataGrouping: {
+                        units: [['minute',[10]]]
+                    }
+                }]
+            });
+
+            $('#candle_sector').change(function() {
+                var candleV = $('#candle_sector').val();
+                while (chart1.series.length > 0) {
+                    chart1.series[0].remove(false);
+                }
+                var new_grouping_unit = [];
+                switch (candleV) {
+                    case '1min':
+                        duration = 1;
+                        new_grouping_unit = [
+                            ['minute', [1]]
+                        ];
+                        break;
+                    case '5min':
+                        duration = 5;
+                        new_grouping_unit = [
+                            ['minute', [5]]
+                        ];
+                        break;
+                    case '15min':
+                        duration = 15;
+                        new_grouping_unit = [
+                            ['minute', [15]]
+                        ];
+                        break;
+                    case "30min":
+                        new_grouping_unit = [
+                            ['minute', [30]]
+                        ];
+                        break;
+                    case "1hr":
+                        new_grouping_unit = [
+                            ['hour', [1]]
+                        ];
+                        break;
+                    case "1d":
+                        new_grouping_unit = [
+                            ['day', [1]]
+                        ];
+                        break;
+                    case "3d":
+                        new_grouping_unit = [
+                            ['day', [3]]
+                        ];
+                        break;
+                    case "1w":
+                        new_grouping_unit = [
+                            ['week', [1]]
+                        ];
+                        break;
+                    case "1m":
+                        new_grouping_unit = [
+                            ['month', [1]]
+                        ];
+                        break;
+                    default:
+                        break;
+                }
+                chart1.addSeries({
+                    type: 'candlestick',
+                    name: 'Price',
+                    id:'price',
+                    data: ohlc,
+                    dataGrouping: {
+                        units: new_grouping_unit
+                    }
+                });                
+                chart1.addSeries({
+                    type: 'column',
+                    name: 'Volume',
+                    data: volume,
+                    id: 'volume',                    
+                    yAxis: 1,
+                    dataGrouping: {
+                        units: new_grouping_unit
+                    }
+                });     
+                var volSeries = chart1.series.find(function(s) {
+                    return s.userOptions.id === 'volume';
+                });
+                
+                // Override the poitAttribs function on the volume series.
+                volSeries.pointAttribs = (function(original) {                
+                return function(point, state) {                                                    
+                    // Call the original pointAttribs function.
+                    var attribs = original.apply(this, arguments);
+
+                    // Get the price series using the id.
+                    var priceSeries = point.series.chart.series.find(function(s) {
+                    return s.userOptions.id === 'price';
+                    });
+                    
+                    // Find the candle corresponding to the current volume point.
+                    var candle;
+                    if (point.series.hasGroupedData) {
+                    // With grouped data, we need to find the candle from the grouped data.
+                    var datagroup = point.dataGroup;
+                    var groupIdx = point.series.groupMap.indexOf(datagroup);
+
+                    candle = priceSeries.groupedData[groupIdx];
+                    } else {
+                    // Non-grouped data, we can just use the normal data.
+                    candle = priceSeries.data[point.index];
+                    }
+
+                    // Choose the color for the volume point based on the candle properties.
+                    var color = 'red';
+                    if (candle.close > candle.open) {
+                    color = 'red';
+                    } else if (candle.close < candle.open) {
+                    color = 'green';
+                    }
+                    // Set the volume point's attribute(s) accordingly.
+                    attribs.fill = color;
+                    // Return the updated attributes.
+                    return attribs;
+                                
+                };
+                })(volSeries.pointAttribs);
+                // Need to call update so the changes get taken into account on first draw.
+                chart1.update({});           
+            });
+
+            var plot_line_label = $('.highcharts-plot-line-label');
+
+            console.log(plot_line_label.attr('x'));
+            var xmlns = "http://www.w3.org/2000/svg";
+            var svg_img = document.createElementNS(xmlns,"image");
+            svg_img.href.baseVal = 'arr.svg';
+            svg_img.setAttributeNS(null,"x",plot_line_label.attr('x') - 70);
+            svg_img.setAttributeNS(null,"y",plot_line_label.attr('y') - 20);
+            
+            svg_img.setAttributeNS(null,"width","80px");
+            svg_img.setAttributeNS(null,"height","30px");
+
+            var svg_obj = $('#container').find('svg');
+            svg_obj.append(svg_img);
+            // svg_obj.appendChild('<image xlink:href="arr.svg" x="1050" y="462" height="30px" width="80px" />');                        
+            svg_obj.append(plot_line_label);
+        });
+
+        //json manipulation
+        function transformJson(data, duration) {
+            var timestampDuration = duration * 60 * 1000;
+            var res = [];
+            var resObj = {};
+            var date = [];
+            for (var i = 0; i < data.length; i++) {
+                var timestamp1 = Date.parse(data[i]['timestamp']);
+                date.push(timestamp1)
+            }
+            var minDate = Math.min.apply(null, date);
+            var maxDate = Math.max.apply(null, date);
+
+            minDate = minDate - minDate % timestampDuration;
+            maxDate = maxDate - maxDate % timestampDuration + timestampDuration;
+
+            for (var i = minDate; i <= maxDate; i += timestampDuration) {
+                var tmp = [];
+                tmp[i] = i;
+                resObj[i] = [];
+
+            }
+            for (var i = 0; i < data.length; i++) {
+                var x = Date.parse(data[i]['timestamp']) - Date.parse(data[i]['timestamp']) % timestampDuration;
+                resObj[x].push(data[i]);
+            }
+
+            for (var key in resObj) {
+                if (resObj[key] != '') {
+                    var tmp = getValuesFromArray(key, resObj[key]);
+                }
+                res.push(tmp);
+            }
+            return res;
+        }
+
+        //get openPrice, closePrice, highestPrice, lowestPrice
+        function getValuesFromArray(startTime, tmpArray) {
+            var priceArray = tmpArray.map(function(el) {
+                return el.price
+            });
+
+            var lowestPrice = Math.min(...priceArray);
+            var highestPrice = Math.max(...priceArray);
+
+            var startDate = tmpArray.map(function(el) {
+                return Date.parse(el.timestamp)
+            }).reduce(function(el) {
+                return Math.max(el)
+            });
+            var endDate = tmpArray.map(function(el) {
+                return Date.parse(el.timestamp)
+            }).reduce(function(el) {
+                return Math.max(el)
+            });
+            var qty = tmpArray.map(function(el) {
+                return el.qty
+            }).reduce(function(el) {
+                return Math.max(el)
+            });
+
+            var openPrice = 0,
+                closePrice = 0;
+
+            // iterate over each element in the array
+            for (var i = 0; i < tmpArray.length; i++) {
+                // look for the entry with a matching `code` value
+                if (Date.parse(tmpArray[i].timestamp) == startDate) {
+                    openPrice = tmpArray[i]['price'];
+                }
+            }
+
+            for (var i = 0; i < tmpArray.length; i++) {
+                // look for the entry with a matching `code` value
+                if (Date.parse(tmpArray[i].timestamp) == endDate) {
+                    closePrice = tmpArray[i]['price'];
+                }
+            }
+
+            var tmpRes = [parseFloat(startTime), openPrice, highestPrice, lowestPrice, closePrice, qty];
+            return tmpRes;
+        }
+
+        //sort array
+        function custom_sort(a, b) {
+            return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+        }        
+    </script>
+</body>
